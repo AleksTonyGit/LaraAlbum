@@ -1,4 +1,4 @@
-# Inage gallery is project created on Laravel Framework 5.4
+# Image gallery is project created on Laravel Framework 5.4
 
 ## Installation
 
