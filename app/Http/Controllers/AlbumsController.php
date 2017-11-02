@@ -9,23 +9,28 @@ use App\Album;
 
 class AlbumsController extends Controller
 {
+    /*отображение всех альбомов c  на странице Index*/
     public function getList()
     {
         $albums = Album::with('Photos')->get();
         return view('index')->with('albums',$albums);
     }
+
+    /*отображение альбома и всех его изображений на странице выбранного альбома*/
     public function getAlbum($id)
     {
         $album = Album::with('Photos')->find($id);
         $albums = Album::with('Photos')->get();
-        //dd($album);
         return view('album', ['album'=>$album, 'albums'=>$albums]);
-        //->with('album',$album);
     }
+
+    /*форма создания нового альбома*/
     public function getForm()
     {
         return view('createalbum');
     }
+
+    /*обработка формы создания нового альбома и запись в БД */
     public function postCreate(Request $request)
     {
         $rules = ['name' => 'required', 'cover_image'=>'required|image'];
@@ -47,6 +52,8 @@ class AlbumsController extends Controller
         ));
         return redirect()->route('show_album',['id'=>$album->id]);
     }
+
+    /*удаление альбома из БД*/
     public function getDelete($id)
     {
         $album = Album::find($id);

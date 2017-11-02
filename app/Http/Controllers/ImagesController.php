@@ -8,12 +8,15 @@ use App\Image;
 
 class ImagesController extends Controller
 {
+    /*форма создания нового изображения*/
     public function getForm($id)
     {
         $album = Album::find($id);
         return view('addimage')
             ->with('album',$album);
     }
+
+    /*обработка формы создания нового изображения и добавления его в БД*/
     public function postAdd(Request $request)
     {
         $rules = [
@@ -38,12 +41,16 @@ class ImagesController extends Controller
         ));
         return redirect()->route('show_album',['id'=>$request->get('album_id')]);
     }
+
+    /*удаление изображения*/
     public function getDelete($id)
     {
         $image = Image::find($id);
         $image->delete();
         return redirect()->route('show_album',['id'=>$image->album_id]);
     }
+
+    /*перемещение изображения в другой альбом*/
     public function postMove(Request $request)
     {
         $rules = array(
